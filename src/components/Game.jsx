@@ -68,7 +68,7 @@ const Game = () => {
     return (
       <div className='w-screen h-screen flex flex-col justify-center items-center'>
         <img className='w-screen h-screen' src={background} alt='background' />
-        <img className='absolute top-0 h-screen' onClick={handleBackClick} src={finalScreen} alt='background' />
+        <img className='absolute top-0 h-screen cursor-pointer' onClick={handleBackClick} src={finalScreen} alt='background' />
         <img className='absolute top-96 h-1/4' src={speakingMonkey} alt='background' />
         <h1 className='absolute text-4xl mb-4'>Congratulations!</h1>
       </div>
