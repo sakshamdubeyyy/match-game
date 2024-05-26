@@ -17,8 +17,8 @@ import numberTwoBackground from "../assets/numberTwoBackground.png";
 import numberTwo from "../assets/numberTwo.png";
 import numberThreeBackground from "../assets/numberThreeBackground.png";
 
-export const Home = () => {
-  const [step, setStep] = useState(0);
+const Home: React.FC = () => {
+  const [step, setStep] = useState<number>(0);
   const navigate = useNavigate();
 
   const handleStartClick = () => setStep(1);
@@ -26,7 +26,7 @@ export const Home = () => {
   const handleYesClick = () => setStep(3);
   const handleBackClick = () => setStep(step => Math.max(step - 1, 0)); // Ensure step doesn't go below 0
 
-  const getWords = () => {
+  const getWords = (): string[] => {
     switch (step) {
       case 1:
         return ['My name is Mizo and I love bananas ! 🍌'];

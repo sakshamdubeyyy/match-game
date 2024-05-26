@@ -7,22 +7,28 @@ import blueCard from "../assets/blueCard.png";
 import finalScreen from "../assets/finalScreen.png"
 import speakingMonkey from "../assets/speakingMonkey.png"
 
-// Dummy data
-const images = ['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig'];
-const alphabets = ['A', 'B', 'C', 'D', 'E', 'F'];
+interface Card {
+  id: number;
+  image?: string;
+  alphabet?: string;
+  flipped: boolean;
+}
 
-const Game = () => {
+const images: string[] = ['apple', 'banana', 'cherry', 'date', 'elderberry', 'fig'];
+const alphabets: string[] = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+const Game: React.FC = () => {
   const navigate = useNavigate();
-  const [pinkCards, setPinkCards] = useState(images.map((img, idx) => ({ id: idx, image: img, flipped: false })));
-  const [blueCards, setBlueCards] = useState(alphabets.map((alpha, idx) => ({ id: idx, alphabet: alpha, flipped: false })));
-  const [selectedPinkCard, setSelectedPinkCard] = useState(null);
-  const [selectedBlueCard, setSelectedBlueCard] = useState(null);
-  const [points, setPoints] = useState(0);
-  const [matchFound, setMatchFound] = useState(false);
+  const [pinkCards, setPinkCards] = useState<Card[]>(images.map((img, idx) => ({ id: idx, image: img, flipped: false })));
+  const [blueCards, setBlueCards] = useState<Card[]>(alphabets.map((alpha, idx) => ({ id: idx, alphabet: alpha, flipped: false })));
+  const [selectedPinkCard, setSelectedPinkCard] = useState<Card | null>(null);
+  const [selectedBlueCard, setSelectedBlueCard] = useState<Card | null>(null);
+  const [points, setPoints] = useState<number>(0);
+  const [matchFound, setMatchFound] = useState<boolean>(false);
 
   const handleBackClick = () => navigate('/');
 
-  const handlePinkCardClick = (index) => {
+  const handlePinkCardClick = (index: number) => {
     if (selectedPinkCard !== null || matchFound) return;
     const newPinkCards = [...pinkCards];
     newPinkCards[index].flipped = true;
@@ -30,7 +36,7 @@ const Game = () => {
     setSelectedPinkCard(newPinkCards[index]);
   };
 
-  const handleBlueCardClick = (index) => {
+  const handleBlueCardClick = (index: number) => {
     if (selectedBlueCard !== null || matchFound) return;
     const newBlueCards = [...blueCards];
     newBlueCards[index].flipped = true;
@@ -38,31 +44,31 @@ const Game = () => {
     setSelectedBlueCard(newBlueCards[index]);
 
     if (selectedPinkCard) {
-      if (newBlueCards[index].alphabet[0].toLowerCase() === selectedPinkCard.image[0].toLowerCase()) {
+      if (newBlueCards[index].alphabet![0].toLowerCase() === selectedPinkCard.image![0].toLowerCase()) {                
         setPoints(points + 1);
         setMatchFound(true);
       } else {
         setTimeout(() => {
-          const resetPinkCards = pinkCards.map(card => card.id === selectedPinkCard.id ? { ...card, flipped: false } : card);
-          const resetBlueCards = blueCards.map(card => card.id === newBlueCards[index].id ? { ...card, flipped: false } : card);
+          const resetPinkCards: Card[] = pinkCards.map(card => card.id === selectedPinkCard!.id ? { ...card, flipped: false } : card);
+          const resetBlueCards: Card[] = blueCards.map(card => card.id === newBlueCards[index].id ? { ...card, flipped: false } : card);
           setPinkCards(resetPinkCards);
           setBlueCards(resetBlueCards);
           setSelectedPinkCard(null);
           setSelectedBlueCard(null);
         }, 500);
-      }
+      }      
     }
   };
 
   const handleNext = () => {
     setMatchFound(false);
-    setPinkCards(pinkCards.filter(card => card.id !== selectedPinkCard.id));
-    setBlueCards(blueCards.filter(card => card.id !== selectedBlueCard.id));
+    setPinkCards(pinkCards.filter(card => card.id !== selectedPinkCard!.id));
+    setBlueCards(blueCards.filter(card => card.id !== selectedBlueCard!.id));
     setSelectedPinkCard(null);
     setSelectedBlueCard(null);
   };
 
-  const progressPercentage = (points / 6) * 100;
+  const progressPercentage: number = (points / 6) * 100;
 
   if (points === 6) {
     return (

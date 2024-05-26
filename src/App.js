@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './components/Home';
-import Game from './components/Game';
+import Home from './components/Home.tsx';
+import Game from './components/Game.tsx';
 
 const App = () => {
   return (
